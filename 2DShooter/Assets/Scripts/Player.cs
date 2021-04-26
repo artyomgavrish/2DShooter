@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Timeline;
 
 namespace Shooter
 {
     public abstract class Player : MonoBehaviour
     {
+        
         public float Speed = 3.0f;
         private Rigidbody _rigidbody;
 
@@ -21,5 +24,7 @@ namespace Shooter
             
             _rigidbody.AddForce(movement * Speed);
         }
+        
+        
     }
 }

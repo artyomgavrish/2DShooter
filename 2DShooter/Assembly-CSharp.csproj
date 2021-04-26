@@ -56,6 +56,20 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\BadBonus.cs" />
+     <Compile Include="Assets\Scripts\IInitialization.cs" />
+     <Compile Include="Assets\Scripts\IFlay.cs" />
+     <Compile Include="Assets\Scripts\IInteractable.cs" />
+     <Compile Include="Assets\Scripts\IAction.cs" />
+     <Compile Include="Assets\Scripts\IView.cs" />
+     <Compile Include="Assets\Scripts\IRotation.cs" />
+     <Compile Include="Assets\Scripts\IFlicker.cs" />
+     <Compile Include="Assets\Scripts\InteractiveObject.cs" />
+     <Compile Include="Assets\Scripts\TimeRemaining\ITimeRemaining.cs" />
+     <Compile Include="Assets\Scripts\TimeRemaining\TimeRemainingController.cs" />
+     <Compile Include="Assets\Scripts\GoodBonus.cs" />
+     <Compile Include="Assets\Scripts\GoodBonusesEqualityComparer.cs" />
+     <Compile Include="Assets\Scripts\GoodBonusComparer.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
