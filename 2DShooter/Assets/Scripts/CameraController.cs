@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Shooter
+namespace Geekbrains
 {
     public sealed class CameraController : MonoBehaviour
     {
@@ -13,13 +11,10 @@ namespace Shooter
         {
             _offset = transform.position - Player.transform.position;
         }
-
+        
         private void LateUpdate ()
         {
             transform.position = Player.transform.position + _offset;
         }
-    } 
+    }
 }
-
-
-

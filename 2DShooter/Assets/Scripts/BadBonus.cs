@@ -2,14 +2,22 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Shooter
+namespace Geekbrains
 {
-    public sealed class BadBonus : InteractiveObject, IFlay, IRotation, ICloneable
+    public sealed class BadBonus : InteractiveObject, IFlay, IRotation
     {
         private float _lengthFlay;
         private float _speedRotation;
+        
 
-        private void Awake()
+        private event EventHandler<CaughtPlayerEventArgs> _caughtPlayer;
+        public event EventHandler<CaughtPlayerEventArgs> CaughtPlayer
+        {
+            add { _caughtPlayer += value; }
+            remove { _caughtPlayer -= value; }
+        }
+
+        private void Awake()    
         {
             _lengthFlay = Random.Range(1.0f, 5.0f);
             _speedRotation = Random.Range(10.0f, 50.0f);
@@ -17,7 +25,7 @@ namespace Shooter
         
         protected override void Interaction()
         {
-            // Destroy player
+            _caughtPlayer?.Invoke(this, new CaughtPlayerEventArgs(_color));
         }
 
         public void Flay()
@@ -30,13 +38,6 @@ namespace Shooter
         public void Rotation()
         {
             transform.Rotate(Vector3.up * (Time.deltaTime * _speedRotation), Space.World);
-        }
-        
-        //....
-        public object Clone()
-        {
-            var result = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
-            return result;
         }
     }
 }

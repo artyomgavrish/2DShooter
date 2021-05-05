@@ -1,12 +1,11 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-namespace Shooter
+namespace Geekbrains
 {
-    public sealed class DisplayBonuses : IView
+    public sealed class DisplayBonuses
     {
         private Text _text;
-        private int _point;
         public DisplayBonuses()
         {
             _text = Object.FindObjectOfType<Text>();
@@ -14,16 +13,7 @@ namespace Shooter
         
         public void Display(int value)
         {
-            _point += value;
-            _text.text = $"Вы набрали {_point}";
-        }
-    }
-
-    class MyClassrtty : IView
-    {
-        public void Display(int value)
-        {
-            throw new System.NotImplementedException();
+            _text.text = $"Вы набрали {value}";
         }
     }
 }

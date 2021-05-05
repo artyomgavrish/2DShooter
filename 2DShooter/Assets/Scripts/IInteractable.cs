@@ -1,6 +1,6 @@
-﻿namespace Shooter
+﻿namespace Geekbrains
 {
-    public interface IInteractable : IAction, IInitialization
+    public interface IInteractable : IInitialization
     {
         bool IsInteractable { get; }
     }

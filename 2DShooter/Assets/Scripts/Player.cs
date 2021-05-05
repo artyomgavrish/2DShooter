@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.Timeline;
 
-namespace Shooter
+namespace Geekbrains
 {
     public abstract class Player : MonoBehaviour
     {
-        
-        public float Speed = 3.0f;
+        public float Speed = 10.0f;
         private Rigidbody _rigidbody;
 
         private void Start()
@@ -24,7 +21,5 @@ namespace Shooter
             
             _rigidbody.AddForce(movement * Speed);
         }
-        
-        
     }
 }

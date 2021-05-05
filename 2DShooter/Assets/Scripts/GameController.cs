@@ -1,36 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Shooter
+namespace Geekbrains
 {
     public sealed class GameController : MonoBehaviour, IDisposable
     {
-        private List<InteractiveObject> _interactiveObjects;
+       // public Text _finishGameLabel;
+        private ListInteractableObject _interactiveObject;
+        private DisplayEndGame _displayEndGame;
+        public Animator camShake;
 
+        private void Start()
+        {
+            try
+            {
+                CaughtPlayer(0,null);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+            }
+        }
+        
         private void Awake()
         {
-            _interactiveObjects = FindObjectsOfType<InteractiveObject>().ToList();
-            var displayBonuses = new DisplayBonuses();
-            foreach (var interactiveObject in _interactiveObjects)
+            _interactiveObject = new ListInteractableObject();
+            //_displayEndGame = new DisplayEndGame(_finishGameLabel);
+            foreach (var o in _interactiveObject)
             {
-                interactiveObject.Initialization(displayBonuses);
-                interactiveObject.OnDestroyChange += InteractiveObjectOnOnDestroyChange;
+                if (o is BadBonus badBonus)
+                {
+                    badBonus.CaughtPlayer += CaughtPlayer;
+                   // badBonus.CaughtPlayer += _displayEndGame.GameOver;
+                    badBonus.CaughtPlayer += delegate (object sender, CaughtPlayerEventArgs args) 
+                        { Debug.Log($"Вы проиграли. Вас убил {((GameObject) o).name} {args.Color} цвета"); };
+                }
             }
         }
 
-        private void InteractiveObjectOnOnDestroyChange(InteractiveObject value)
+        private void CaughtPlayer(object value, CaughtPlayerEventArgs args)
         {
-            value.OnDestroyChange -= InteractiveObjectOnOnDestroyChange;
-            _interactiveObjects.Remove(value);
+            if (Time.timeScale != 0.0f)
+            {
+                throw new Exception("Вы еще живы!");
+            }
+            camShake.SetTrigger("Shaker");
+            //Time.timeScale = 0.0f;
         }
 
         private void Update()
         {
-            for (var i = 0; i < _interactiveObjects.Count; i++)
+            for (var i = 0; i < _interactiveObject.Length; i++)
             {
-                var interactiveObject = _interactiveObjects[i];
+                var interactiveObject = _interactiveObject[i];
 
                 if (interactiveObject == null)
                 {
@@ -52,11 +75,21 @@ namespace Shooter
             }
         }
 
+        
+        
         public void Dispose()
         {
-            foreach (var o in _interactiveObjects)
+            foreach (var o in _interactiveObject)
             {
-                Destroy(o.gameObject);
+                if (o is InteractiveObject interactiveObject)
+                {
+                    if (o is BadBonus badBonus)
+                    {
+                        badBonus.CaughtPlayer -= CaughtPlayer;
+                        badBonus.CaughtPlayer -= _displayEndGame.GameOver;
+                    }
+                    Destroy(interactiveObject.gameObject);
+                }
             }
         }
     }

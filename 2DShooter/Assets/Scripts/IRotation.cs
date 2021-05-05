@@ -1,4 +1,4 @@
-﻿namespace Shooter
+﻿namespace Geekbrains
 {
     public interface IRotation
     {
